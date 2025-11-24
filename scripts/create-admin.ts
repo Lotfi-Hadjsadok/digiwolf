@@ -30,8 +30,15 @@ async function createAdmin() {
       },
     });
 
-    if (response.error) {
-      throw new Error(response.error.message || 'Failed to create user');
+    if ('error' in response && response.error) {
+      const errorMessage =
+        typeof response.error === 'object' &&
+        response.error !== null &&
+        'message' in response.error &&
+        response.error.message
+          ? String(response.error.message)
+          : 'Failed to create user';
+      throw new Error(errorMessage);
     }
 
     // Mark email as verified

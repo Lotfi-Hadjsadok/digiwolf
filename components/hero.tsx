@@ -17,7 +17,8 @@ export function Hero({ locale }: { locale: Locale }) {
   const iconsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!heroRef.current) return;
+    const heroElement = heroRef.current;
+    if (!heroElement) return;
 
     const ctx = gsap.context(() => {
       gsap.from(titleRef.current, {
@@ -79,8 +80,8 @@ export function Hero({ locale }: { locale: Locale }) {
         targetMouseY = 0;
       };
 
-      heroRef.current.addEventListener('mousemove', handleMouseMove);
-      heroRef.current.addEventListener('mouseleave', handleMouseLeave);
+      heroElement.addEventListener('mousemove', handleMouseMove);
+      heroElement.addEventListener('mouseleave', handleMouseLeave);
 
       // Smooth mouse position interpolation
       gsap.ticker.add(() => {
@@ -119,9 +120,9 @@ export function Hero({ locale }: { locale: Locale }) {
 
         // Magnetic attraction effect - icons move towards mouse
         const updateMagnetic = () => {
-          if (!heroRef.current) return;
+          if (!heroElement) return;
           
-          const rect = heroRef.current.getBoundingClientRect();
+          const rect = heroElement.getBoundingClientRect();
           const wrapperRect = iconWrapper.getBoundingClientRect();
           const iconCenterX = wrapperRect.left + wrapperRect.width / 2 - rect.left;
           const iconCenterY = wrapperRect.top + wrapperRect.height / 2 - rect.top;
@@ -174,8 +175,8 @@ export function Hero({ locale }: { locale: Locale }) {
       });
 
       return () => {
-        heroRef.current?.removeEventListener('mousemove', handleMouseMove);
-        heroRef.current?.removeEventListener('mouseleave', handleMouseLeave);
+        heroElement.removeEventListener('mousemove', handleMouseMove);
+        heroElement.removeEventListener('mouseleave', handleMouseLeave);
         parallaxTimers.forEach(cleanup => cleanup());
       };
     }, heroRef);
