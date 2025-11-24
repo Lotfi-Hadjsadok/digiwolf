@@ -22,6 +22,15 @@ services:
       - .env
     depends_on:
       - db
+
+  caddy:
+    image: caddy:2
+    ports:
+      - 80:80
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+    depends_on:
+      - app
   
 
 volumes:

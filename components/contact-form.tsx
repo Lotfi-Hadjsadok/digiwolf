@@ -423,9 +423,9 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
       <DialogTrigger asChild>
         {trigger || defaultTrigger}
       </DialogTrigger>
-      <DialogContent className="w-[calc(100%-2rem)] sm:w-full sm:max-w-[600px] max-h-[90vh] overflow-y-auto p-0 gap-0 my-4 sm:my-auto left-[50%] translate-x-[-50%]">
+      <DialogContent className="w-full max-w-[calc(100vw-2rem)] sm:max-w-[640px] max-h-[90vh] overflow-y-auto p-0 gap-0 my-0 rounded-2xl sm:rounded-3xl border border-border/40 shadow-2xl bg-background left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
         {/* Header with gradient background */}
-        <div className="relative gradient-accent-subtle p-6 pb-4 sm:p-8 sm:pb-6 border-b border-accent/20">
+        <div className="relative gradient-accent-subtle p-5 pb-3 sm:p-8 sm:pb-6 border-b border-accent/20">
           <div className="absolute inset-0 gradient-mesh opacity-50" />
           <DialogHeader className="relative z-10">
             <div className="flex items-center gap-3 mb-2">
@@ -436,12 +436,12 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                 {t.contactForm.title}
               </DialogTitle>
             </div>
-            <DialogDescription className="text-base sm:text-lg text-foreground/80 mt-2">
+            <DialogDescription className="text-sm sm:text-lg text-foreground/80 mt-2">
               {t.contactForm.description}
             </DialogDescription>
             
             {/* Trust indicators */}
-            <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-4 pt-4 border-t border-accent/20">
+            <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center sm:gap-6 mt-4 pt-4 border-t border-accent/20 w-full">
               <div className="flex items-center gap-2 text-sm text-foreground/70">
                 <Clock className="w-4 h-4 text-accent" />
                 <span>{t.contactForm.trustIndicators.response24h}</span>
@@ -459,7 +459,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
         </div>
 
         {/* Form content */}
-        <div className="p-6 sm:p-8">
+        <div className="p-5 sm:p-8">
           {isSuccess ? (
             <div className="flex flex-col items-center justify-center py-12 sm:py-16 text-center animate-in fade-in-0 zoom-in-95 duration-300">
               <div className="relative mb-6">
@@ -476,8 +476,8 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
           ) : (
             <>
               {/* Step indicators */}
-              <div className="flex items-center justify-center mb-6 sm:mb-8">
-                <div className="flex items-center gap-2 sm:gap-4">
+              <div className="flex flex-col items-center justify-center gap-3 text-center mb-6 sm:mb-8 sm:flex-row">
+                <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                   {/* Step 1 */}
                   <div className="flex items-center gap-2">
                     <div className={`
@@ -493,7 +493,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                       {currentStep > 1 ? <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> : '1'}
                     </div>
                     <span className={`
-                      hidden sm:block text-sm font-medium transition-colors
+                      hidden sm:block text-xs sm:text-sm font-medium transition-colors
                       ${currentStep === 1 ? 'text-foreground' : 'text-muted-foreground'}
                     `}>
                       {t.contactForm.stepLabels.contactInfo}
@@ -521,7 +521,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                       {currentStep > 2 ? <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> : '2'}
                     </div>
                     <span className={`
-                      hidden sm:block text-sm font-medium transition-colors
+                      hidden sm:block text-xs sm:text-sm font-medium transition-colors
                       ${currentStep === 2 ? 'text-foreground' : 'text-muted-foreground'}
                     `}>
                       {t.contactForm.stepLabels.businessCategory}
@@ -530,10 +530,10 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                 </div>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6 pb-2">
                 {/* Step 1: Contact Information */}
                 {currentStep === 1 && (
-                  <div className="space-y-5 sm:space-y-6 animate-in slide-in-from-right-4 fade-in-0 duration-300">
+                  <div className="space-y-4 sm:space-y-6 animate-in slide-in-from-right-4 fade-in-0 duration-300">
                     {/* Name field */}
                     <div className="space-y-2">
                       <Label htmlFor="name" className="text-sm font-medium flex items-center gap-2">
@@ -626,7 +626,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                         <Briefcase className="w-4 h-4 text-accent" />
                         {t.contactForm.fields.category} <span className="text-destructive">*</span>
                       </Label>
-                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                         {businessCategories.map((cat) => {
                           const Icon = cat.icon;
                           const isSelected = category === cat.value;
@@ -672,7 +672,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                               
                               {/* Description */}
                               {cat.description && (
-                                <div className="text-xs text-muted-foreground line-clamp-1">
+                                <div className="text-xs text-muted-foreground line-clamp-2">
                                   {cat.description}
                                 </div>
                               )}
@@ -732,7 +732,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
                 )}
 
                 {/* Navigation buttons */}
-                <div className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-6 border-t border-border">
+                <div className="flex flex-col sm:flex-row gap-3 pt-4 sm:pt-6 border-t border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 sticky bottom-0 left-0">
                   <Button
                     type="button"
                     variant="outline"
