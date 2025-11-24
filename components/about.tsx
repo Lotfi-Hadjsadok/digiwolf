@@ -16,13 +16,21 @@ export function About({ locale }: { locale: Locale }) {
     if (!isInView || !sectionRef.current) return;
 
     const cards = sectionRef.current.querySelectorAll('.about-card');
-    gsap.from(cards, {
-      opacity: 0,
-      x: -30,
-      duration: 0.8,
-      stagger: 0.15,
-      ease: 'power3.out',
-    });
+    gsap.fromTo(
+      cards,
+      {
+        opacity: 0,
+        x: -30,
+      },
+      {
+        opacity: 1,
+        x: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: 'power3.out',
+        clearProps: 'transform',
+      }
+    );
   }, [isInView]);
 
   const values = [
@@ -66,13 +74,13 @@ export function About({ locale }: { locale: Locale }) {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
           {values.map((value, index) => {
             const Icon = value.icon;
             return (
               <div
                 key={index}
-                className="about-card p-8 rounded-lg border border-accent/20 bg-card/80 backdrop-blur-sm text-center hover-lift relative overflow-hidden group"
+                className="about-card p-8 rounded-lg border border-accent/20 bg-card/80 backdrop-blur-sm text-center hover-lift relative overflow-hidden group w-full max-w-md md:max-w-none"
               >
                 {/* Gradient overlay on hover */}
                 <div className="absolute inset-0 gradient-accent-subtle opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
