@@ -212,12 +212,16 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
     try {
       // Capture browser information
       const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : '';
-      const browser = typeof window !== 'undefined' ? window.navigator.userAgentData?.platform || 'Unknown' : 'Unknown';
-      const phoneModel = getPhoneModel(userAgent);
+      const browser = typeof window !== 'undefined' ? window.navigator.userAgent || 'Unknown' : 'Unknown';
+      const phoneModel = getPhoneModel(userAgent) || undefined;
       
       // Submit form data using server action
       const result = await createLead({
-        ...formData,
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        category: formData.category as BusinessCategory,
+        businessDescription: formData.businessDescription,
         browser,
         userAgent,
         phoneModel,
@@ -285,8 +289,8 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
     try {
       // Capture browser information
       const userAgent = typeof window !== 'undefined' ? window.navigator.userAgent : '';
-      const browser = typeof window !== 'undefined' ? window.navigator.userAgentData?.platform || 'Unknown' : 'Unknown';
-      const phoneModel = getPhoneModel(userAgent);
+      const browser = typeof window !== 'undefined' ? window.navigator.userAgent || 'Unknown' : 'Unknown';
+      const phoneModel = getPhoneModel(userAgent) || undefined;
       
       // Save abandoned lead silently
       await createAbandonedLead({
@@ -363,7 +367,7 @@ export function ContactForm({ trigger, locale = 'en' }: ContactFormProps) {
   const handleChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     if (field === 'category') {
-      setCategory(value);
+      setCategory(value as BusinessCategory | "");
     }
     // Clear error when user starts typing
     if (errors[field as keyof FormErrors]) {
