@@ -45,3 +45,7 @@ next-env.d.ts
 /generated/prisma
 
 /generated/prisma
+
+
+Caddyfile
+docker-compose.yml

@@ -1,4 +1,4 @@
-:80 {
+digiwolfdz.online, www.digiwolfdz.online {
     reverse_proxy app:3000
 }
 
